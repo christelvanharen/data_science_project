@@ -1,0 +1,43 @@
+#rule all zodat de hele snakemake achter elkaar werkt
+rule all:
+        input: directory('/home/administrator/pipeline_data/regressie_plots')
+
+#app Gabe, hier worden de SNps opgehaald
+rule SNP_ophalen:
+        output: "/home/administrator/pipeline_data/All_SNPs.tsv"
+        input: "BIN-3f/eiwitten_ribosoom.txt"
+        shell: "python BIN-3f/SNP_data.py {input} {output}"
+
+#bash script runt GATK en STAR
+rule bash:
+        output: "/mnt/NAS/bin3f/GATK_output/output_genotypegvcvfs.vcf.gz"
+        shell: '''
+                /home/administrator/script.sh
+                zcat {output}| head -n 1
+                '''
+
+#python script michelle maakt een genotype aan
+rule snps_sel:
+        output: "/home/administrator/pipeline_data/SNP.txt"
+        input:
+                SNPs_Gabe="/home/administrator/pipeline_data/All_SNPs.tsv",
+                genotype="/mnt/NAS/bin3f/GATK_output/output_genotypegvcvfs.vcf.gz"
+        shell: "python BIN-3f/snps_sel.py {input.SNPs_Gabe} {input.genotype} {output}"
+
+#python script normalisatie normaliseert de raw data
+rule normalisatie:
+        output: "/home/administrator/pipeline_data/normalized_counts.txt"
+        input: "/mnt/NAS/bin3f/full_data/deseq2/raw_counts_A549_matrix.txt"
+        shell: "python BIN-3f/normalized_counts.py {input} {output}"
+
+#python script regressie analyse, maakt een regressie analyse
+rule regressie:
+        output: directory("/home/administrator/pipeline_data/regressie_plots")
+        input:
+                genotype="/home/administrator/pipeline_data/SNP.txt",
+                count_data="/home/administrator/pipeline_data/normalized_counts.txt"
+        shell: '''
+                mkdir {output}
+                python BIN-3f/linear_regression.py {input.count_data} {input.genotype} {output}
+                '''
+
