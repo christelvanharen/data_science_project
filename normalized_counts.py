@@ -1,11 +1,13 @@
 """
-Author: Moshtach Ismail and Christel van Haren
+Author: Moshtach Ismail
 This script converts the raw counts to normalized counts.
 """
 import pandas as pd
 from sklearn import preprocessing
 import sys
 
+# de input bestand is matrix.txt
+# de output bestand is genormaliseerde_countsAllsamples.txt
 
 def een(raw_counts, normalised_counts):
     """
