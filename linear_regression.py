@@ -58,27 +58,29 @@ def analysis(genotype, count, directory):
                 0) and x.__contains__(2):
 
                 slope, intercept, r, p, std_err = stats.linregress(x, y)
+                if stats.ttest_ind(x, y) <= 0.05:
+                    def myfunc(x):
+                        """
+                        This calculates the coefficient and returns it.
+                        """
+                        return slope * x + intercept #y=ax+b
 
-                def myfunc(x):
-                    """
-                    This calculates the coefficient and returns it.
-                    """
-                    return slope * x + intercept #y=ax+b
+                    mymodel = list(map(myfunc, x))
 
-                mymodel = list(map(myfunc, x))
-
-                # if the counts(phenotype) have all 0's in a row,
-                # the plot will not be made.
-                if mymodel != [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]:
-                    plt.scatter(x, y)
-                    plt.plot(x, mymodel, color='black')
-                    plt.title("Regression Analysis")
-                    plt.xlabel("Genotype")
-                    plt.ylabel("Phenotype")
-                    plt.savefig(f"{directory}/eQTL{counts}.jpg")
-                    plt.clf()
-                    plt.close()
-                    counts += 1
+                    # if the counts(phenotype) have all 0's in a row,
+                    # the plot will not be made.
+                    if mymodel != [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]:
+                        plt.scatter(x, y)
+                        plt.plot(x, mymodel, color='black')
+                        plt.title("Regression Analysis")
+                        plt.xlabel("Genotype")
+                        plt.ylabel("Phenotype")
+                        plt.savefig(f"{directory}/eQTL{counts}.jpg")
+                        plt.clf()
+                        plt.close()
+                        counts += 1
+                    else:
+                        continue
                 else:
                     continue
             else:
