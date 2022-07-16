@@ -1,6 +1,7 @@
 """
 Author: Christel van Haren and Michelle Memelink
 This file uses the normalised rawcounts and a test matrix for an eQTL analysis.
+Adjusted date: 14 july 2022
 """
 import sys
 import matplotlib.pyplot as plt
