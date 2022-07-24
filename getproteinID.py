@@ -2,7 +2,7 @@
 Author: Christel van Haren
 Description: This file extracts the proteins IDs from each chromosome
 file.
-Date: 16-07-2022
+Date: 24-07-2022
 """
 import sys
 
@@ -22,8 +22,9 @@ def protein(input_file, output_file):
                     gn = ids[2].split("GN=")
                     gen_id = gn[1].split(" ")
                     proteinIDs.append(gen_id[0])
+                    duplicates = list(set(proteinIDs))
                     write_file = open(output_file, "w")
-                    write_file.write(str(proteinIDs))
+                    write_file.write(str(duplicates[:600]))
                     # correct adjustments made for in file
                     with open(output_file, "r") as p:
                         for lines in p:
