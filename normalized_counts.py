@@ -7,9 +7,6 @@ import pandas as pd
 from sklearn import preprocessing
 import sys
 
-# de input bestand is matrix.txt
-# de output bestand is
-
 def test(raw_counts):
     """
     the first value of each row will be put in a list.
@@ -21,7 +18,7 @@ def test(raw_counts):
     """
     c = [] # gene names
     # reads the file with the raw counts
-    df = pd.read_table(raw_counts, sep='\t',
+    df = pd.read_table(f"{raw_counts}", sep='\t',
                        error_bad_lines=False)
 
     q = df.iloc[:,0] # only gets first value of each row
@@ -30,12 +27,12 @@ def test(raw_counts):
 
     return c
 
-def een(raw_counts,c):
+def een(raw_counts,c, genormaliseerde_waarden_nieuw):
     """
     The raw counts file is read in using pandas, so that the
     counts can be normalized with the sklearn.preprocessing.
     """
-    df = pd.read_table(raw_counts,
+    df = pd.read_table(f"{raw_counts}",
                        sep="\t", usecols=range(1, 7), # only gets
                        # columns with values
                        skiprows=1) # skips header
@@ -49,7 +46,8 @@ def een(raw_counts,c):
     # add the the column names to the new dataframe
     df.columns = ['A549_0_1', 'A549_0_2', 'A549_0_3','A549_25_1',
                    'A549_25_2','A549_25_3']
-    df['gene_name'] = c # a new column will be add to the dataframe,
+    df['gene_name'] = c # a new column will be add to the
+    # dataframe,
     # the gene names
 
     # shift column gene_name to first position
@@ -59,42 +57,16 @@ def een(raw_counts,c):
     # first_column) function
     df.insert(0, 'gene_name', first_column)
     # make new file with normalized data and good column names in order
-    df.to_csv("genormaliseerde_waarden_nieuw.txt", sep='\t', mode='w',
+    df.to_csv(f"{genormaliseerde_waarden_nieuw}", sep='\t',
+              mode='w',
               index=False)
 
 
-def main():
-    raw_counts = "/Users/mushtaaqismail/PycharmProjects/data_science_project/matrix.txt"
+def main(raw_counts, c, genormaliseerde_waarden_nieuw):
+    #raw_counts = "/Users/mushtaaqismail/PycharmProjects
+    # /data_science_project/matrix.txt"
     c = test(raw_counts)
-    een(raw_counts,c)
+    een(raw_counts,c, genormaliseerde_waarden_nieuw)
 
-main()
-
-
-
-# def een(raw_counts, normalised_counts):
-#     """
-#     The raw counts file is read in using pandas, so that the
-#     counts can be normalized with the sklearn.preprocessing.
-#     """
-#     # read file into pandas dataframe
-#     df = pd.read_table(f"{raw_counts}",
-#                        sep="\t", usecols=range(1, 7),
-#                        skiprows=1)
-#
-#     x = df.values  # gives numpy array back
-#     column = ''
-#     min_max_scaler = preprocessing.MinMaxScaler()
-#     x_scaled = min_max_scaler.fit_transform(x)  # normalized values
-#     df = pd.DataFrame(
-#         x_scaled)  # normalized values into pandas dataframe
-#     # makes new file with new variables
-#     df.to_csv(f"{normalised_counts}", sep='\t', mode='w')
-#
-#
-# def main(raw_counts, normalised_counts):
-#     een(raw_counts, normalised_counts)
-#
-#
-# if __name__ == '__main__':
-#     main(sys.argv[1], sys.argv[2])
+if __name__ == '__main__':
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
