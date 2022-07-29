@@ -15,14 +15,14 @@ def counts(filename_rawcounts):
     normalised_counts.py. It makes a 2D list from every row in the file.
     """
     with open(filename_rawcounts, 'r') as c:
-        first_lines = c.readline() #skips the first row
+        first_lines = c.readline()  # skips the first row
         count = []
         for lines in c:
-            inf = lines.strip("\n") #removes the enter at the end
+            inf = lines.strip("\n")  # removes the enter at the end
             inf2 = inf.split("\t")
-            inf2 = list(map(float, inf2))
-            count.append(inf2[1:]) #skips the first column
-
+            inf2 = list(map(str, inf2))
+            count.append(str(inf2[1:]))  # skips the first column
+            # print(count)
         return count
 
 
@@ -36,9 +36,9 @@ def regressieanalyse(filename_genotypes):
         for line in g:
             info2 = line.strip("\n") #removes the enter at the end
             info = info2.split("\t")
-            info = list(map(int, info))
-            genotype.append(info[1:]) #skips the first colums
-
+            info = list(map(str, info))
+            genotype.append(str(info[1:])) #skips the first colums
+            # print(genotype)
         return genotype
 
 
