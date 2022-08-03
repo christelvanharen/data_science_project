@@ -52,6 +52,7 @@ def een(raw_counts,c, genormaliseerde_waarden_nieuw):
 
     # shift column gene_name to first position
     first_column = df.pop('gene_name')
+    print(first_column)
 
     # insert column using insert(position,column_name,
     # first_column) function

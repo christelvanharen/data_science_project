@@ -48,7 +48,7 @@ def read_clin_file(clin_file):
               "correct information")
     except Exception as error:
         print("An error has occurred: " + str(error))
-
+    print(list_snps)
     return list_snps
 
 
@@ -76,7 +76,7 @@ def read_snp_file(snp_file, snp_out):
     try:
         with gzip.open(snp_file, "rt") as file:
             for line in file:
-                print(line)
+                # print(line)
                 if re.search("^#[a-zA-Z]", line):
                     line = line.split("\t")
                     for x in range(len(line)):
