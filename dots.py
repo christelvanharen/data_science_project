@@ -11,6 +11,7 @@ def dots(file, new_file):
             write_file.write(new_column)
     write_file.close()
 
+
 def main():
     file = "genormaliseerde_waarden_nieuw.txt"
     new_file = "final_normalised_counts.txt"
