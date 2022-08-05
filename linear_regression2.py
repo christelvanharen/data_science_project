@@ -15,7 +15,7 @@ def counts():
     This file uses the normalised rawcounts file from the
     normalised_counts.py. It makes a 2D list from every row in the file.
     """
-    with open("genormaliseerde_waarden_nieuw.txt", 'r') as c:
+    with open("final_normalised_counts.txt", 'r') as c:
         first_lines = c.readline()  # skips the first row
         count = []
         for lines in c:
@@ -31,7 +31,7 @@ def regressieanalyse():
     """
     The file used is a test matrix.
     """
-    with open("resultaten_snpsel_nietdef.txt", 'r') as g:
+    with open("resultaten_snpsel_definitief.txt", 'r') as g:
         first_line = g.readline()  # skips the first row
         genotype = []
         for line in g:
@@ -54,40 +54,40 @@ def analysis(genotype, count):
             x = np.array(i)  # genotype
             y = np.array(k)  # phenotype
 
-            if x.__contains__(0) and x.__contains__(
-                    1) or x.__contains__(
-                0) and x.__contains__(2):
+            # if x.__contains__(0) and x.__contains__(
+            #         1) or x.__contains__(
+            #     0) and x.__contains__(2):
 
-                slope, intercept, r, p, std_err = stats.linregress(x, y)
+            slope, intercept, r, p, std_err = stats.linregress(x, y)
 
-                # if stats.ttest_ind(x, y) <= 0.05:
-                def myfunc(x):
-                    """
-                    This calculates the coefficient and returns it.
-                    """
-                    return slope * x + intercept  # y=ax+b
+            # if stats.ttest_ind(x, y) <= 0.05:
+            def myfunc(x):
+                """
+                This calculates the coefficient and returns it.
+                """
+                return slope * x + intercept  # y=ax+b
 
-                mymodel = list(map(myfunc, x))
+            mymodel = list(map(myfunc, x))
 
                 # if the counts(phenotype) have all 0's in a row,
                 # the plot will not be made.
-                if mymodel != [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]:
-                    plt.scatter(x, y)
-                    plt.plot(x, mymodel, color='black')
-                    plt.title("Regression Analysis")
-                    plt.xlabel("Genotype")
-                    plt.ylabel("Phenotype")
-                    # for n in range(0, len(mymodel)):
-                    #     img.save(f"RegressionPlots/eQTL{n}.jpg")
-                    #     cv2_plt_imshow.imshow(f"RegressionPlots/eQTL{n}.jpg", mymodel)
-                    #     cv2.imwrite(f"RegressionPlots/eQTL{n}.jpg", img)
-                    plt.show()
-                else:
-                    continue
-                # else:
-                #     continue
+            if mymodel != [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]:
+                plt.scatter(x, y)
+                plt.plot(x, mymodel, color='black')
+                plt.title("Regression Analysis")
+                plt.xlabel("Genotype")
+                plt.ylabel("Phenotype")
+                # for n in range(0, len(mymodel)):
+                #     img.save(f"RegressionPlots/eQTL{n}.jpg")
+                #     cv2_plt_imshow.imshow(f"RegressionPlots/eQTL{n}.jpg", mymodel)
+                #     cv2.imwrite(f"RegressionPlots/eQTL{n}.jpg", img)
+                plt.show()
             else:
                 continue
+                # else:
+                #     continue
+            # else:
+            #     continue
 
 
 def main():

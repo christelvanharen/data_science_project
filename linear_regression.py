@@ -59,7 +59,8 @@ def analysis(genotype, count, directory):
             #         1) or x.__contains__(
             #     0) and x.__contains__(2):
 
-            slope, intercept, r, p, std_err = stats.linregress(x, y)
+            slope, intercept, r, p, std_err = stats.linregress(
+                int(x), int(y))
             # if stats.ttest_ind(x, y) <= 0.05:
             def myfunc(x):
                 """
