@@ -64,8 +64,6 @@ def een(raw_counts,c, genormaliseerde_waarden_nieuw):
 
 
 def main(raw_counts, c, genormaliseerde_waarden_nieuw):
-    #raw_counts = "/Users/mushtaaqismail/PycharmProjects
-    # /data_science_project/matrix.txt"
     c = test(raw_counts)
     een(raw_counts,c, genormaliseerde_waarden_nieuw)
 

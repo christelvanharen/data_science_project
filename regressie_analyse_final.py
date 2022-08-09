@@ -1,12 +1,14 @@
 """
-Author: Michelle Memelink, Christel van Haren,  Gijsbert Keja and
+Author: Michelle Memelink, Christel van Haren, Gijsbert Keja and
 Moshtach Ismail
-This file uses the normalised rawcounts and a test matrix for an eQTL analysis.
+This file uses the normalised rawcounts and a genotype matrix for an
+eQTL analysis.
 """
 import sys
 import matplotlib.pyplot as plt
 import numpy
 from scipy import stats
+from scipy.stats import ttest_ind
 
 def filter(filename_rawcounts, filename_genotypes):
     """
@@ -39,7 +41,7 @@ def filter(filename_rawcounts, filename_genotypes):
 
 def regressieanalyse(filename_genotypes):
     """
-    The file used is a test matrix.
+    The file used is a genotype matrix.
     """
     with open(filename_genotypes, 'r') as g:
         first_line = g.readline() #skips the first row
@@ -56,7 +58,8 @@ def analysis(genotype, count, directory, key_words):
     """
     This function does the eQTL analysis. It calculates the
     coefficient and if there are certain combinations of the
-    genotypes than that plot will be skipped.
+    genotypes than that plot will be skipped. There is also a p-value
+    of <0.05
     """
     counts = 0
 
@@ -65,6 +68,7 @@ def analysis(genotype, count, directory, key_words):
     for x, y, a in zip(arr, arr2, key_words[1:]):
         if x.__contains__(0) and x.__contains__(1) or x.__contains__(0) and x.__contains__(2):
             slope, intercept, r, p, std_err = stats.linregress(x,y)
+            # print(p)
 
             def myfunc(x):
                 """
@@ -77,35 +81,37 @@ def analysis(genotype, count, directory, key_words):
                 # if the counts(phenotype) have all 0's in a row,
                 # the plot will not be made.
             if mymodel != [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]:
-                plt.scatter(x, y, color="lime", label="cancer patients ")
-                plt.plot(x, mymodel, color='black')
-                plt.plot(x[0], y[0], 'ob',label="not-cancer patients")
-                # first element are cancerpatients
-                plt.plot(x[-1], y[-1], 'ob') #
-                # last element are cancerpatients
-                plt.title(f"Regression Analysis {a}") #gene name in 
-                # title
-                plt.xlabel("Genotype")
-                plt.legend(loc="upper left") # legenda toevoegen
-                plt.ylabel("Phenotype")
-                plt.savefig(f"{directory}/eQTL{counts}.jpg")
-                plt.clf()
-                plt.close()
-                counts += 1
+                res = ttest_ind(x, y).pvalue
+                # print(res)
+                if res <= 0.05:
+                    plt.scatter(x, y, color="lime", label="cancer patients ")
+                    plt.plot(x, mymodel, color='black')
+                    plt.plot(x[0], y[0], 'ob',label="not-cancer patients")
+                    # first element are cancerpatients
+                    plt.plot(x[-1], y[-1], 'ob') #
+                    # last element are cancerpatients
+                    plt.title(f"Regression Analysis {a}") #gene name in
+                    # title
+                    plt.xlabel("Genotype")
+                    plt.legend(loc="upper left") # legenda toevoegen
+                    plt.ylabel("Phenotype")
+                    plt.savefig(f"{directory}/eQTL{counts}.jpg")
+                    plt.clf()
+                    plt.close()
+                    counts += 1
+                else:
+                    continue
             else:
                 continue
         else:
             continue
 
-def main():
-    filename_rawcounts = "/Users/mushtaaqismail/PycharmProjects/" \
-                         "data_science_project/final_normalised_counts.txt"
-    filename_genotypes = "/Users/mushtaaqismail/PycharmProjects/" \
-                         "data_science_project/resultaten_snpsel_definitief.txt"
-    directory = "/Users/mushtaaqismail/PycharmProjects" \
-                "/data_science_project/plt"
+
+def main(filename_rawcounts, filename_genotypes, directory):
     count, key_words = filter(filename_rawcounts, filename_genotypes)
     genotype = regressieanalyse(filename_genotypes)
     analysis(genotype, count, directory, key_words)
 
-main()
+
+if __name__ == '__main__':
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
