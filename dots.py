@@ -3,7 +3,7 @@ Author: Christel van Haren
 The normalised counts file had versions of the gene names,
 like ENSG00000260370.1, and removes the versions. So everything that
 comes after the '.' will be removed and will look like ENSG00000260370.
-Adjusted date: 4 august 2022
+Date: 04-08-2022
 """
 import sys
 

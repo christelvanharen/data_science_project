@@ -6,12 +6,11 @@ Date: 24-07-2022
 """
 import sys
 
-# input file = chr10_protein.txt
-# output file = proteinIDs.txt
 
 def protein(input_file, output_file):
     """
-    Extracts the accession ID from the FASTA file of the chromosome.
+    Extracts the first 600 accession IDs from the FASTA file of the
+    chromosome and writes them in a new file.
     """
     try:
         proteinIDs = []
