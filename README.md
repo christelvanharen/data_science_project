@@ -1,8 +1,8 @@
 # Genomic polymorphisms in ribo-interactome may underlie variation in gene expression in people with cancer
 
 The aim of this study is to demonstrate by means of an expression
-quantitative trait loci (eQTL) analysis an association between SNPs in ribosomal and ribosome-associated proteins, and a difference in gene expression between cancer and non-cancer patients.
-During the eQTL analysis, gene expression is compared by regression to SNPs in the ribo-interactome of individuals. This allows the effect of these SNPs on gene expression to be determined. For this research, a pipeline was created with which the analysis was performed for test data of the human chromosome 10.
+quantitative trait loci (eQTL) analysis an association between SNPs in de genes of chr 10, and a difference in gene expression between cancer and non-cancer patients.
+During the eQTL analysis, gene expression is compared by regression to SNPs in the genes of chr 10. This allows the effect of these SNPs on gene expression to be determined. For this research, a pipeline was created with which the analysis was performed.
 
 ## Clone the project
 First, start by cloning this project using the following command:
