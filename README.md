@@ -1,4 +1,4 @@
-# Genomic polymorphisms in ribo-interactome may underlie variation in gene expression in people with cancer
+# Genomic polymorphisms in chr 10 underlie variation in gene expression in people with cancer
 
 The aim of this study is to demonstrate by means of an expression
 quantitative trait loci (eQTL) analysis an association between SNPs in de genes of chr 10, and a difference in gene expression between cancer and non-cancer patients.
