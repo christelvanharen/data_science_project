@@ -24,13 +24,13 @@ def file_reader_splitter(chr_bestand):
     for x in chr_lezen:
         if x.startswith('>'):
             teller = teller + 1
-            line = x.split("|")
+            line = x.split("|") 
             lijn = line[2].split()
-            positie_gennaam = len(lijn) - 3
+            positie_gennaam = len(lijn) - 3 # de vaste positie van het gennaam is van de laatste positie in de zin 3 naar links
             gennaam = lijn[positie_gennaam]
-            gen = gennaam.split("=")
+            gen = gennaam.split("=") # in de gennaam zat er de = voor dus deze moet weg
             lijst_met_duplicates.append(gen[1])
-    lijst_zonder_duplicates = list(set(lijst_met_duplicates))
+    lijst_zonder_duplicates = list(set(lijst_met_duplicates)) # door het gebruik van een set worden alle duplicaten verwijdert
     return lijst_zonder_duplicates
 
 def file_writer(chr_output, lijst_zonder_duplicates):
@@ -45,7 +45,7 @@ def file_writer(chr_output, lijst_zonder_duplicates):
     new_file = open(chr_output, "w")
     for x in lijst_zonder_duplicates:
         new_file.write(x)
-        new_file.write("\n")
+        new_file.write("\n") # voegt enters toe aan het nieuwe bestand want anders worden alle string achter elkaar geplakt
 
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2])
