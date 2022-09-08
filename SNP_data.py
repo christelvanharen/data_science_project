@@ -1,6 +1,6 @@
 """
 Authors: Gabe van de Hoeven and Gijsbert Keja
-Zoekt op basis van gennaam naar alle pathogene SNPs van de genen, daarnaast schrijft die deze naar een .tsv bestand
+Searches by gene name for all pathogen SNPs of the genes, pens them to a .tsv file
 """
 import datetime
 import http.client
