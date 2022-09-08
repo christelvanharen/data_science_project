@@ -17,8 +17,8 @@ def filter(filename_rawcounts, filename_genotypes):
     list.
     :return:
     """
-    count = [] # lijst met alle counts van de gennamen waarvan
-    # genotype bekend is
+    count = [] # list with all the counts of the genenames
+    # where the genotype is known
     key_words = []
     next = []
     with open(filename_genotypes, 'r') as b:
